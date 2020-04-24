@@ -16,29 +16,35 @@ public class RocketShip : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        ProcessInput();
+        ShipBoost();
+        ShipRotate();
     }
 
-    private void ProcessInput() {
-        
+    private void ShipBoost() {
         if (Input.GetKey(KeyCode.Space)) {
-            rigidBody.AddForce(Vector3.up);
-            
+            rigidBody.AddRelativeForce(Vector3.up);
             //prevents sound layering
             if (!audioSource.isPlaying) {
                 audioSource.Play();
             }
         } 
-        
         else {
             audioSource.Stop();
         }
+    }
+
+    private void ShipRotate() {
+        //takes manual control of rotation
+        rigidBody.freezeRotation = true;
 
         if (Input.GetKey(KeyCode.A)) {
             transform.Rotate(Vector3.forward);
-        } 
-        else if (Input.GetKey(KeyCode.D)) {
-            transform.Rotate(-Vector3.forward);
         }
+        else if (Input.GetKey(KeyCode.D)) {
+            transform.Rotate(Vector3.back);
+        }
+        //resume physics control of rotation
+        rigidBody.freezeRotation = false;
     }
+
 }
