@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RocketShip : MonoBehaviour {
 
     Rigidbody rigidBody;
     AudioSource audioSource;
+
+    enum State { Alive, Dying, Transcending };
+    State state = State.Alive;
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
 
@@ -17,24 +21,40 @@ public class RocketShip : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        ShipBoost();
-        ShipRotate();
+        if (state == State.Alive) {
+            ShipBoost();
+            ShipRotate();
+        }
     }
 
     void OnCollisionEnter(Collision collision) {
         
+        if (state != State.Alive) {
+            return;
+        }
+
         switch(collision.gameObject.tag) {
 
             case "Friendly":
-                print("Ok");
+                // print("Ok");
                 break;
             case "Win":
-                print("Win");
+                state = State.Transcending;
+                Invoke("LoadNextScene", 1f);
                 break;
             default:
-                print("Dead");
+                state = State.Dying;
+                Invoke("ReloadFirstScene", 2f);
                 break;
         }
+    }
+
+    private void LoadNextScene() {
+        SceneManager.LoadScene(1);
+    }
+
+    private void ReloadFirstScene() {
+        SceneManager.LoadScene(0);
     }
 
     private void ShipBoost() {
