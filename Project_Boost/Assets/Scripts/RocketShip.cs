@@ -28,6 +28,9 @@ public class RocketShip : MonoBehaviour {
             case "Friendly":
                 print("Ok");
                 break;
+            case "Win":
+                print("Win");
+                break;
             default:
                 print("Dead");
                 break;
