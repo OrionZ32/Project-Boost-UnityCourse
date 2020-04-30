@@ -10,11 +10,17 @@ public class RocketShip : MonoBehaviour {
 
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
+
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+
     [SerializeField] AudioClip mainEngine;
-    [SerializeField] AudioClip deathSound;
-    [SerializeField] AudioClip winChime;
+    [SerializeField] AudioClip success;
+    [SerializeField] AudioClip death;
+
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem deathParticles;
 
     // Start is called before the first frame update
     void Start() {
@@ -52,14 +58,18 @@ public class RocketShip : MonoBehaviour {
 
     private void WinSequence() {
         audioSource.Stop();
-        audioSource.PlayOneShot(winChime);
+        mainEngineParticles.Stop();
+        audioSource.PlayOneShot(success);
+        successParticles.Play();
         state = State.Transcending;
         Invoke("LoadNextScene", 1f);
     }
 
     private void DeathSequence() {
         audioSource.Stop();
-        audioSource.PlayOneShot(deathSound);
+        mainEngineParticles.Stop();
+        audioSource.PlayOneShot(death);
+        deathParticles.Play();
         state = State.Dying;
         Invoke("ReloadFirstScene", 2f);
     }
@@ -78,6 +88,7 @@ public class RocketShip : MonoBehaviour {
         } 
         else {
             audioSource.Stop();
+            mainEngineParticles.Stop();
         }
     }
 
@@ -87,6 +98,7 @@ public class RocketShip : MonoBehaviour {
             if (!audioSource.isPlaying) {
                 audioSource.PlayOneShot(mainEngine);
             }
+                mainEngineParticles.Play();
     }
 
     private void RespondToRotateInput() {
