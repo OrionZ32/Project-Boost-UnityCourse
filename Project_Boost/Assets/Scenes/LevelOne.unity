@@ -209,12 +209,12 @@ PrefabInstance:
     - target: {fileID: 976737387647447291, guid: c9ac9190b2817ec4a8c198be0ba8504e,
         type: 3}
       propertyPath: m_Name
-      value: Obstacle 2
+      value: Moving Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 4032800635307671710, guid: c9ac9190b2817ec4a8c198be0ba8504e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.167426
+      value: -10.19
       objectReference: {fileID: 0}
     - target: {fileID: 4032800635307671710, guid: c9ac9190b2817ec4a8c198be0ba8504e,
         type: 3}
@@ -514,6 +514,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1297066939}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1925233337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 976737387647447291, guid: c9ac9190b2817ec4a8c198be0ba8504e,
+    type: 3}
+  m_PrefabInstance: {fileID: 936260101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1925233338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925233337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f924161bb38f00540814d1e99ed2562d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementVector: {x: 12, y: 0, z: 0}
+  period: 3.5
 --- !u!1001 &3374333240813565356
 PrefabInstance:
   m_ObjectHideFlags: 0

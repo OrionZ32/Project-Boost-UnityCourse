@@ -13,6 +13,7 @@ public class RocketShip : MonoBehaviour {
 
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] float levelLoadDelay = 2f;
 
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip success;
@@ -37,10 +38,7 @@ public class RocketShip : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-        
-        if (state != State.Alive) {
-            return;
-        }
+        if (state != State.Alive) { return; }
 
         switch(collision.gameObject.tag) {
 
@@ -62,7 +60,7 @@ public class RocketShip : MonoBehaviour {
         audioSource.PlayOneShot(success);
         successParticles.Play();
         state = State.Transcending;
-        Invoke("LoadNextScene", 1f);
+        Invoke("LoadNextScene", levelLoadDelay);
     }
 
     private void DeathSequence() {
@@ -71,7 +69,7 @@ public class RocketShip : MonoBehaviour {
         audioSource.PlayOneShot(death);
         deathParticles.Play();
         state = State.Dying;
-        Invoke("ReloadFirstScene", 2f);
+        Invoke("ReloadFirstScene", levelLoadDelay);
     }
 
     private void LoadNextScene() {
@@ -93,7 +91,7 @@ public class RocketShip : MonoBehaviour {
     }
 
     private void ApplyThrust() {
-        rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
             //prevents sound layering
             if (!audioSource.isPlaying) {
                 audioSource.PlayOneShot(mainEngine);
