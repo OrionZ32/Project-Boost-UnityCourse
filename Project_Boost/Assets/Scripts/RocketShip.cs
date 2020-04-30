@@ -12,6 +12,9 @@ public class RocketShip : MonoBehaviour {
     State state = State.Alive;
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip winChime;
 
     // Start is called before the first frame update
     void Start() {
@@ -22,9 +25,9 @@ public class RocketShip : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (state == State.Alive) {
-            ShipBoost();
-            ShipRotate();
-        }
+            RespondToThrustInput();
+            RespondToRotateInput();
+        } 
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -36,17 +39,29 @@ public class RocketShip : MonoBehaviour {
         switch(collision.gameObject.tag) {
 
             case "Friendly":
-                // print("Ok");
+                //do nothing
                 break;
             case "Win":
-                state = State.Transcending;
-                Invoke("LoadNextScene", 1f);
+                WinSequence();
                 break;
             default:
-                state = State.Dying;
-                Invoke("ReloadFirstScene", 2f);
+                DeathSequence();
                 break;
         }
+    }
+
+    private void WinSequence() {
+        audioSource.Stop();
+        audioSource.PlayOneShot(winChime);
+        state = State.Transcending;
+        Invoke("LoadNextScene", 1f);
+    }
+
+    private void DeathSequence() {
+        audioSource.Stop();
+        audioSource.PlayOneShot(deathSound);
+        state = State.Dying;
+        Invoke("ReloadFirstScene", 2f);
     }
 
     private void LoadNextScene() {
@@ -57,20 +72,24 @@ public class RocketShip : MonoBehaviour {
         SceneManager.LoadScene(0);
     }
 
-    private void ShipBoost() {
+    private void RespondToThrustInput() {
         if (Input.GetKey(KeyCode.Space)) {
-            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
-            //prevents sound layering
-            if (!audioSource.isPlaying) {
-                audioSource.Play();
-            }
+            ApplyThrust();
         } 
         else {
             audioSource.Stop();
         }
     }
 
-    private void ShipRotate() {
+    private void ApplyThrust() {
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+            //prevents sound layering
+            if (!audioSource.isPlaying) {
+                audioSource.PlayOneShot(mainEngine);
+            }
+    }
+
+    private void RespondToRotateInput() {
         //takes manual control of rotation
         rigidBody.freezeRotation = true;
 
