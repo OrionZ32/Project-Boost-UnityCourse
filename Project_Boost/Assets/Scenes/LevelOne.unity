@@ -268,7 +268,7 @@ PrefabInstance:
     - target: {fileID: 3476290286808024319, guid: f608d38aaa466064198b39795ff5ca3c,
         type: 3}
       propertyPath: m_Name
-      value: Moving Obstacle Variant
+      value: Moving Obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f608d38aaa466064198b39795ff5ca3c, type: 3}
@@ -801,10 +801,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 453060564, guid: 9fed33764b19a034188a3dd63a08d5a9, type: 3}
-      propertyPath: m_Name
-      value: Launch Pad Light
-      objectReference: {fileID: 0}
     - target: {fileID: 6399265614383121692, guid: 9fed33764b19a034188a3dd63a08d5a9,
         type: 3}
       propertyPath: m_LocalPosition.x

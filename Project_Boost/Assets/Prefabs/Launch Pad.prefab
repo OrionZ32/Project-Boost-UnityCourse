@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 453060565}
   - component: {fileID: 453060566}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Launch Pad Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 0, g: 1, b: 0.08817577, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 5
   m_SpotAngle: 30
